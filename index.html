@@ -12,16 +12,18 @@
         <h1>Weather Dashboard</h1>
     </header>
 
-    <div>
-        <div>
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col-lg-3 bg-light">
             <h2 class="mt-1">Search for a City</h2>
-            <div>
-                <input id="enter-city" placeholder="Enter a City">
-                <div>
-                    <button type="button" id="search-button"><i class="fas fa-search"></i></button>
+            <div class="mb-3 input-group">
+                <input id="enter-city" placeholder="Enter a City" class="form-control" aria-label="Enter a City">
+                <div class="input-group-append">
+                    <button type="button btn-primary" id="search-button"><i class="fas fa-search"></i></button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
