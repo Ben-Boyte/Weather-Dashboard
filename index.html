@@ -10,16 +10,16 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
-    <header>
+    <header class="text-center container-fluid">
         <h1>Weather Dashboard</h1>
     </header>
 
     <div class="container-fluid">
         <div class="row">
-        <div class="col-lg-3 bg-light">
+        <div class="col-lg-3">
             <h2 class="mt-1">Search for a City</h2>
             <div class="mb-3 input-group">
-                <input id="enter-city" placeholder="Enter a City" class="form-control" aria-label="Enter a City">
+                <input id="enter-city" placeholder="Enter a City" class="form-control">
                 <div class="input-group-append">
                     <button type="button btn-primary" id="search-button"><i class="fas fa-search"></i></button>
                 </div>
@@ -27,23 +27,29 @@
             <form id="history"></form>
         </div>
         <div class="col-lg-9">
+            <div class="row d-none" id="fiveday-forecast">
+                <div class="col-10">
+                    <h3>5-Day Forecast</h3>
+                </div>
+            </div>
+            <div class="row">
+             <div class="col-md-2 forecast bg-primary text-black m-2"></div>
+             <div class="col-md-2 forecast bg-primary text-black m-2"></div>
+             <div class="col-md-2 forecast bg-primary text-black m-2"></div>
+             <div class="col-md-2 forecast bg-primary text-black m-2"></div>
+             <div class="col-md-2 forecast bg-primary text-black m-2"></div>
+            </div>
             <div class="row mr-0">
-                <div id="weather-today" class="col-lg-11 m-3 card d-none">
+                <div id="weather-today" class="col-lg-3 m-3 card d-none">
                     <div class="card-body">
-                    <h3 class="city-name align-middle" id="city"></h3>
+                    <h3 class="city-name align-middle" id="city"> Current Weather</h3>
+                    <img id="current-pic" alt="">
                     <p id="temperature"></p>
                     <p id="humidity"></p>
                     <p id="wind-speed"></p>
                     <p id="UV-index"></p>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-             <div class="col-md-2 forecast bg-primary text-white m-2 rounded"></div>
-             <div class="col-md-2 forecast bg-primary text-white m-2 rounded"></div>
-             <div class="col-md-2 forecast bg-primary text-white m-2 rounded"></div>
-             <div class="col-md-2 forecast bg-primary text-white m-2 rounded"></div>
-             <div class="col-md-2 forecast bg-primary text-white m-2 rounded"></div>
             </div>
         </div>
     </div>
