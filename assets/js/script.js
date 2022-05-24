@@ -24,7 +24,7 @@
     function math(K) {
         return Math.floor((K - 273.15) * 1.8 + 32);
     }
-    
+     
     
     function saveSearch() {
         historyEl.innerHTML = "";
