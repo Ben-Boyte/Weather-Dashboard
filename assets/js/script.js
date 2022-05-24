@@ -51,28 +51,28 @@ if (searchHistory.length > 0) {
         axios.get(queryURL)
             .then(function (response) {
 
-                weatherToday.classList.remove("d-none");
+            weatherToday.classList.remove("d-none");
 
                 var currentDate = new Date(response.data.dt * 1000);
                 var day = currentDate.getDate();
                 var month = currentDate.getMonth() + 1;
                 var year = currentDate.getFullYear();
                 
-                let weatherPic = response.data.weather[0].icon;
+                var weatherPic = response.data.weather[0].icon;
 
                 cityName.innerHTML = response.data.name + " (" + month + "/" + day + "/" + year + ") ";
                 currentPic.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
                 currentPic.setAttribute("alt", response.data.weather[0].description);
-                currentTemp.innerHTML = "Temperature: " + math(response.data.main.temp) + " &#176F";
+                currentTemp.innerHTML = "Temp: " + math(response.data.main.temp) + " &#176F";
                 currentHumidity.innerHTML = "Humidity: " + response.data.main.humidity + "%";
                 currentWind.innerHTML = "Wind Speed: " + response.data.wind.speed + " MPH";
                 
-                let lat = response.data.coord.lat;
-                let lon = response.data.coord.lon;
-                let UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&cnt=1";
+                var lat = response.data.coord.lat;
+                var lon = response.data.coord.lon;
+                var UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&cnt=1";
                 axios.get(UVQueryURL)
                     .then(function (response) {
-                        let UVNumber = document.createElement("span");
+                        var UVNumber = document.createElement("span");
                         
                         if (response.data[0].value < 8 ) {
                             UVNumber.setAttribute("class", "badge badge-warning");
@@ -89,7 +89,40 @@ if (searchHistory.length > 0) {
                     });
                 
             
-                
+                var cityInfo = response.data.id;
+                var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityInfo + "&appid=" + apiKey;
+                axios.get(forecastQueryURL)
+                    
+                .then(function (response) {
+                        fivedayForecast.classList.remove("d-none");
+                        
+                        var forecastEls = document.querySelectorAll(".forecast");
+                        for (i = 0; i < forecastEls.length; i++) {
+                            forecastEls[i].innerHTML = "";
+                            var forecastResult = i * 8 + 4;
+                            var forecastDate = new Date(response.data.list[forecastResult].dt * 1000);
+                            var weatherDay = forecastDate.getDate();
+                            var weatherMonth = forecastDate.getMonth() + 1;
+                            var weatherYear = forecastDate.getFullYear();
+                            var forecastDate = document.createElement("p");
+                            forecastDate.setAttribute("class", "mt-3 mb-0 forecast-date");
+                            forecastDate.innerHTML = weatherMonth + "/" + weatherDay + "/" + weatherYear;
+                            forecastEls[i].append(forecastDate);
+
+                            var forecastWeather = document.createElement("img");
+                            forecastWeather.setAttribute("src", "https://openweathermap.org/img/wn/" + response.data.list[forecastResult].weather[0].icon + "@2x.png");
+                            forecastWeather.setAttribute("alt", response.data.list[forecastResult].weather[0].description);
+                            forecastEls[i].append(forecastWeather);
+
+                            var forecastTemp = document.createElement("p");
+                            forecastTemp.innerHTML = math(response.data.list[forecastResult].main.temp) + " &#176F";
+                            forecastEls[i].append(forecastTemp);
+                            
+                            var forecastHumidity = document.createElement("p");
+                            forecastHumidity.innerHTML = "Humidity: " + response.data.list[forecastResult].main.humidity + "%";
+                            forecastEls[i].append(forecastHumidity);
+                }
+             })
         });
     }
 
