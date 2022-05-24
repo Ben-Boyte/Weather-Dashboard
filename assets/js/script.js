@@ -11,8 +11,6 @@
     var historyEl = document.getElementById("history");
     var apiKey = "23a2969256bbc0a60e21d67c4fcf10ab"
 
-    let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
-
     search.addEventListener("click", function () {
         var searchResult = enterCity.value;
         weather(searchResult);
@@ -25,6 +23,7 @@
         return Math.floor((K - 273.15) * 1.8 + 32);
     }
      
+    let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
     
     function saveSearch() {
         historyEl.innerHTML = "";
