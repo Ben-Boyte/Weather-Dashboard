@@ -48,7 +48,49 @@ if (searchHistory.length > 0) {
 
     function weather(cityName) {
         let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + apiKey;
-       
+        axios.get(queryURL)
+            .then(function (response) {
+
+                weatherToday.classList.remove("d-none");
+
+                var currentDate = new Date(response.data.dt * 1000);
+                var day = currentDate.getDate();
+                var month = currentDate.getMonth() + 1;
+                var year = currentDate.getFullYear();
+                
+                let weatherPic = response.data.weather[0].icon;
+
+                cityName.innerHTML = response.data.name + " (" + month + "/" + day + "/" + year + ") ";
+                currentPic.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
+                currentPic.setAttribute("alt", response.data.weather[0].description);
+                currentTemp.innerHTML = "Temperature: " + math(response.data.main.temp) + " &#176F";
+                currentHumidity.innerHTML = "Humidity: " + response.data.main.humidity + "%";
+                currentWind.innerHTML = "Wind Speed: " + response.data.wind.speed + " MPH";
+                
+                let lat = response.data.coord.lat;
+                let lon = response.data.coord.lon;
+                let UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&cnt=1";
+                axios.get(UVQueryURL)
+                    .then(function (response) {
+                        let UVNumber = document.createElement("span");
+                        
+                        if (response.data[0].value < 8 ) {
+                            UVNumber.setAttribute("class", "badge badge-warning");
+                        }
+                        else if (response.data[0].value < 4) {
+                            UVNumber.setAttribute("class", "badge badge-success");
+                        }
+                        else {
+                            UVNumber.setAttribute("class", "badge badge-danger");
+                        }
+                        UVNumber.innerHTML = response.data[0].value;
+                        currentUV.innerHTML = "UV Index: ";
+                        currentUV.append(UVNumber);
+                    });
+                
+            
+                
+        });
     }
 
 
