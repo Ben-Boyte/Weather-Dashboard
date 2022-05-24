@@ -4,6 +4,6 @@
 
 # Link to website: https://ben-boyte.github.io/Weather-Dashboard/
 
-# Screenshot of finished product;
+# Screenshot of finished product ;
 
 # ![Screenshot](./assets/images/Screenshot.PNG "Screenshot")
