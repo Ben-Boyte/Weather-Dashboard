@@ -11,6 +11,8 @@
     var historyEl = document.getElementById("history");
     var apiKey = "23a2969256bbc0a60e21d67c4fcf10ab"
 
+    let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+
     search.addEventListener("click", function () {
         var searchResult = enterCity.value;
         weather(searchResult);
@@ -18,32 +20,31 @@
         localStorage.setItem("search", JSON.stringify(searchHistory));
         saveSearch();
     })
-
-function math(K) {
-    return Math.floor((K - 273.15) * 1.8 + 32);
-}
-
-let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
-
-function saveSearch() {
-    historyEl.innerHTML = "";
-    for (let i = 0; i < searchHistory.length; i++) {
-        var historyResult = document.createElement("input");
-        historyResult.setAttribute("type", "text");
-        historyResult.setAttribute("readonly", true);
-        historyResult.setAttribute("class", "form-control d-block bg-white");
-        historyResult.setAttribute("value", searchHistory[i]);
-        historyResult.addEventListener("click", function () {
-            weather(historyResult.value);
-        })
-        historyEl.append(historyResult);
+    
+    function math(K) {
+        return Math.floor((K - 273.15) * 1.8 + 32);
     }
-}
-
-saveSearch();
-if (searchHistory.length > 0) {
-    weather(searchHistory[searchHistory.length - 1]);
-}
+    
+    
+    function saveSearch() {
+        historyEl.innerHTML = "";
+        for (let i = 0; i < searchHistory.length; i++) {
+            const historyResult = document.createElement("input");
+            historyResult.setAttribute("type", "text");
+            historyResult.setAttribute("readonly", true);
+            historyResult.setAttribute("class", "form-control d-block bg-white");
+            historyResult.setAttribute("value", searchHistory[i]);
+            historyResult.addEventListener("click", function () {
+                weather(historyResult.value);
+            })
+            historyEl.append(historyResult);
+        }
+    }
+    
+    saveSearch();
+    if (searchHistory.length > 0) {
+        weather(searchHistory[searchHistory.length - 1]);
+    }
 
 
     function weather(cityName) {
